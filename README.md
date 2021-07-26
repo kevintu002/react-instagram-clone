@@ -1,5 +1,12 @@
 # Getting Started with Create React App
 
+# asdf
+
+live version
+https://poplica-instagram-clone.firebaseapp.com/
+or 
+poplica-instagram-clone.web.app
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
