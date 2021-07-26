@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "poplica-instagram-clone",
     "public": "build",
     "ignore": [
       "firebase.json",
