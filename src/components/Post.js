@@ -17,7 +17,7 @@ function Post({ username, caption, imageUrl }) {
       <img 
         className="post__image" 
         src={imageUrl}
-        alt="Broken image link"
+        alt=""
       ></img>
 
       <h4 className="post__text"><strong>{username}</strong> {caption}</h4>

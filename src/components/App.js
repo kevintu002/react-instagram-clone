@@ -18,6 +18,16 @@ function App() {
 
   return (
     <div className="app">
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <h2>I am a modal</h2>
+        </div>
+      </Modal>
 
       <div className="app__header">
         <img
