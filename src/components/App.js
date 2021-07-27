@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { db } from '../service/firebase';
+import { auth, db } from '../service/firebase';
 import { Button, Input, Modal, makeStyles } from '@material-ui/core';
 
 import Post from './Post'
@@ -40,6 +40,17 @@ function App() {
   const [password, setPassword] = useState("")
 
   useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+
+      } else {
+        
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    // populate posts from db
     db.collection('posts').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
@@ -47,6 +58,14 @@ function App() {
       })))
     })
   }, [])
+
+  const signUp = (event) => {
+    event.preventDefault()
+
+    auth.createUserWithEmailAndPassword(email, password)
+    .then()
+    .catch(error => alert(error.message))
+  }
 
   return (
     <div className="app">
@@ -65,7 +84,7 @@ function App() {
                 alt=""
               ></img>
             </center>
-            
+
             <Input
               type="text"
               placeholder="username"
@@ -85,7 +104,7 @@ function App() {
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
 
-            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+            <Button type="submit" onClick={signUp}>Sign Up</Button>
           </form>
         </div>
       </Modal>
@@ -98,8 +117,9 @@ function App() {
         ></img>
       </div>
 
-      
+      <Button onClick={() => setOpen(true)}>Sign Up</Button>
 
+      {/* list of posts in the db */}
       {
         posts.map(({post, id}) => (
           <Post 
