@@ -1,7 +1,7 @@
 import '../styles/Post.css'
 import { Avatar } from '@material-ui/core'
 
-function Post({ username, caption, imageUrl }) {
+export default function Post({ username, caption, imageUrl }) {
   return (
     <div className="post">
       <div className="post__header">
@@ -24,5 +24,3 @@ function Post({ username, caption, imageUrl }) {
     </div>
   )
 }
-
-export default Post
