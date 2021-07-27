@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import { auth, db } from '../service/firebase';
 import { Button, Input, Modal, makeStyles } from '@material-ui/core';
 
-import Post from './Post'
 import '../styles/App.css';
+import Post from './Post'
+import ImageUpload from './ImageUpload'
 
 function getModalStyle() {
   const top = 50;
@@ -82,7 +83,7 @@ export default function App() {
     setOpen(false)
   }
 
-  const signUp = (event) => {
+  const signIn = (event) => {
     event.preventDefault()
 
     auth.signInWithEmailAndPassword(email, password)
@@ -93,11 +94,12 @@ export default function App() {
 
   return (
     <div className="app">
+
+      <ImageUpload></ImageUpload>
+
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
           <form className="app__signUp">
@@ -136,8 +138,6 @@ export default function App() {
       <Modal
         open={openSignIn}
         onClose={() => setOpenSignIn(false)}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
           <form className="app__signUp">
