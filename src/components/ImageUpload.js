@@ -61,7 +61,11 @@ export default function ImageUpload({username}) {
         value={caption}>
       </input>
       <input type="file" onChange={handleFile}></input>
-      <Button onClick={handleUpload}>Upload</Button>
+      <Button 
+        disabled={!image} 
+        accept="image/png, image/jpeg" 
+        onClick={handleUpload}
+      >Upload</Button>
     </div>
   )
 }

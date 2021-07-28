@@ -174,7 +174,10 @@ export default function App() {
         />
 
         {user ? (
-          <Button onClick={() => auth.signOut()}>Logout</Button>
+          <div>
+            {user.displayName}
+            <Button onClick={() => auth.signOut()}>Logout</Button>
+          </div>
         ): (
           <div className="app__loginContainer">
             <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
@@ -200,7 +203,7 @@ export default function App() {
       {user?.displayName ? (
         <ImageUpload username={user.displayName} />
       ): (
-        <h3>Login to upload</h3>
+        null
       )}
     </div>
   );
