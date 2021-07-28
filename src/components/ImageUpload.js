@@ -56,7 +56,7 @@ export default function ImageUpload({username}) {
       <progress className="imageUpload__progress" value={progress} max="100" />
       <input 
         type="text" 
-        placeholder="Enter a caption" 
+        placeholder="Enter a caption..." 
         onChange={e => setCaption(e.target.value)}
         value={caption}>
       </input>

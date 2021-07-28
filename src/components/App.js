@@ -185,9 +185,11 @@ export default function App() {
 
       {/* list of posts in the db */}
       <div className="app__posts">
-        {posts.map(({post, id}) => (
+        {posts.map(({id, post}) => (
           <Post 
             key={id} 
+            postId={id}
+            user={user}
             username={post.username} 
             caption={post.caption} 
             imageUrl={post.imageUrl} 
