@@ -61,7 +61,8 @@ export default function App() {
 
   useEffect(() => {
     // populate posts from db
-    db.collection('posts').onSnapshot(snapshot => {
+    // db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+    db.collection('posts').orderBy('username', 'asc').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()
@@ -69,8 +70,8 @@ export default function App() {
     })
   }, [])
 
-  const signUp = (event) => {
-    event.preventDefault()
+  const signUp = (e) => {
+    e.preventDefault()
 
     auth.createUserWithEmailAndPassword(email, password)
     .then(authUser => {
@@ -83,8 +84,8 @@ export default function App() {
     setOpen(false)
   }
 
-  const signIn = (event) => {
-    event.preventDefault()
+  const signIn = (e) => {
+    e.preventDefault()
 
     auth.signInWithEmailAndPassword(email, password)
     .catch(error => alert(error.messsage))
@@ -95,7 +96,11 @@ export default function App() {
   return (
     <div className="app">
 
-      <ImageUpload></ImageUpload>
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ): (
+        <h3>Login to upload</h3>
+      )}
 
       <Modal
         open={open}
