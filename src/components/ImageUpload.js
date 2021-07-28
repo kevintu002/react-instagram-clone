@@ -3,6 +3,8 @@ import { Button } from '@material-ui/core';
 import firebase from 'firebase/app';
 import { storage, db } from 'service/firebase';
 
+import '../styles/ImageUpload.css'
+
 export default function ImageUpload({username}) {
   const [image, setImage] = useState(null)
   const [progress, setProgress] = useState(0)
@@ -30,7 +32,7 @@ export default function ImageUpload({username}) {
         console.log(error.message)
       },
       () => {
-        // successful uplo
+        // successful upload adds image to db
         storage.ref('images').child(image.name).getDownloadURL()
         .then(url => {
           db.collection("posts").add({
@@ -40,6 +42,7 @@ export default function ImageUpload({username}) {
             username: username
           })
 
+          // reset states
           setImage(null)
           setProgress(0)
           setCaption('')
@@ -49,12 +52,12 @@ export default function ImageUpload({username}) {
   }
 
   return (
-    <div>
-      <progress value={progress} max="100" />
+    <div className="imageUpload">
+      <progress className="imageUpload__progress" value={progress} max="100" />
       <input 
         type="text" 
         placeholder="Enter a caption" 
-        onChange={event => setCaption(event.target.value)}
+        onChange={e => setCaption(e.target.value)}
         value={caption}>
       </input>
       <input type="file" onChange={handleFile}></input>
