@@ -36,16 +36,16 @@ export default function App() {
   const [posts, setPosts] = useState([])
   const [open, setOpen] = useState(false)
   const [openSignIn, setOpenSignIn] = useState(false)
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(authUser => {
       if (authUser) {
         // user is logged in
-        console.log(authUser)
+        // console.log(authUser)
         setUser(authUser)
       } else {
         // user is logged out
@@ -68,6 +68,12 @@ export default function App() {
     })
   }, [])
 
+  const resetLoginFields = () => {
+    setUsername('')
+    setEmail('')
+    setPassword('')
+  }
+
   // should update user somewhere
   const signUp = (e) => {
     e.preventDefault()
@@ -80,6 +86,7 @@ export default function App() {
     })
     .catch(error => alert(error.message))
 
+    resetLoginFields()
     setOpen(false)
   }
 
@@ -90,6 +97,7 @@ export default function App() {
     auth.signInWithEmailAndPassword(email, password)
     .catch(error => alert(error.messsage))
 
+    resetLoginFields()
     setOpenSignIn(false)
   }
 

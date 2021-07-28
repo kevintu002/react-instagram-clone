@@ -11,7 +11,7 @@ export default function Post({ postId, user, username, caption, imageUrl }) {
   useEffect(() => {
     let unsubscribe
     if (postId) {
-      // populate comments with 
+      // populate comments on postId from db
       unsubscribe = db.collection('posts').doc(postId)
         .collection('comments').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
           setComments(snapshot.docs.map((doc) => doc.data()))
@@ -56,8 +56,8 @@ export default function Post({ postId, user, username, caption, imageUrl }) {
       <h4 className="post__text"><strong>{username}</strong> {caption}</h4>
 
       <div className="post__comments">
-        {comments.map((comment) => (
-          <p>
+        {comments.map((comment, id) => (
+          <p key={id}>
             <strong>{comment.username}</strong> {comment.text}
           </p>
         ))}

@@ -61,7 +61,7 @@ export default function ImageUpload({username}) {
       </input>
       <input 
         type="file" 
-        accept="image/png, image/jpeg"
+        accept="image/*"
         onChange={handleFile}>
       </input>
       <Button 
