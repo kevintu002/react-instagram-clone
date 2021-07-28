@@ -13,7 +13,7 @@ export default function Post({ postId, user, username, caption, imageUrl }) {
     if (postId) {
       // populate comments with 
       unsubscribe = db.collection('posts').doc(postId)
-        .collection('comments').onSnapshot((snapshot) => {
+        .collection('comments').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
           setComments(snapshot.docs.map((doc) => doc.data()))
       })
     }
@@ -41,7 +41,7 @@ export default function Post({ postId, user, username, caption, imageUrl }) {
         <Avatar
           className="post__avatar"
           src=""
-          alt=""
+          alt="Cool"
         >
         </Avatar>
         <h3>{username}</h3>
@@ -60,9 +60,7 @@ export default function Post({ postId, user, username, caption, imageUrl }) {
           <p>
             <strong>{comment.username}</strong> {comment.text}
           </p>
-        ))
-
-        }
+        ))}
       </div>
 
       <form className="post__commentBox">

@@ -41,12 +41,11 @@ export default function ImageUpload({username}) {
             imageUrl: url,
             username: username
           })
-
-          // reset states
-          setImage(null)
-          setProgress(0)
-          setCaption('')
         })
+        // reset states
+        setImage(null)
+        setProgress(0)
+        setCaption('')
       }
     )
   }
@@ -60,10 +59,13 @@ export default function ImageUpload({username}) {
         onChange={e => setCaption(e.target.value)}
         value={caption}>
       </input>
-      <input type="file" onChange={handleFile}></input>
+      <input 
+        type="file" 
+        accept="image/png, image/jpeg"
+        onChange={handleFile}>
+      </input>
       <Button 
-        disabled={!image} 
-        accept="image/png, image/jpeg" 
+        disabled={!image}  
         onClick={handleUpload}
       >Upload</Button>
     </div>
