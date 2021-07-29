@@ -33,13 +33,14 @@ export default function App() {
   const classes = useStyles()
   const [modalStyle] = useState(getModalStyle)
 
-  const [posts, setPosts] = useState([])
   const [openSignUp, setOpenSignUp] = useState(false)
   const [openSignIn, setOpenSignIn] = useState(false)
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(authUser => {
@@ -59,7 +60,7 @@ export default function App() {
   }, [user, username])
 
   useEffect(() => {
-    // populate posts from db
+    // populate posts from db. newest will be at the top.
     db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
@@ -74,36 +75,48 @@ export default function App() {
     setPassword('')
   }
 
-  // should update user somewhere
   const signUp = (e) => {
     e.preventDefault()
 
     auth.createUserWithEmailAndPassword(email, password)
     .then(authUser => {
+      handleClose()
       return authUser.user.updateProfile({
         displayName: username
       })
     })
     .catch(error => alert(error.message))
-
-    resetLoginFields()
-    handleClose()
   }
 
-  // should update user somewhere
   const signIn = (e) => {
     e.preventDefault()
 
     auth.signInWithEmailAndPassword(email, password)
-    .catch(error => alert(error.messsage))
-
-    resetLoginFields()
-    handleClose()
+    .then(authUser => {
+      handleClose()
+    })
+    .catch(error => {
+      alert("No matching email and password found")
+    })
   }
 
   const handleClose = () => {
+    resetLoginFields()
     setOpenSignUp(false)
     setOpenSignIn(false)
+  }
+
+  const handleGuest = (e) => {
+    e.preventDefault()
+
+    auth.signInWithEmailAndPassword('guest@account.com', 'guestaccount')
+    .then(authUser => {
+      handleClose()
+      return authUser.user.updateProfile({
+        displayName: 'Guest'
+      })
+    })
+    .catch(error => alert(error.message))
   }
 
   return (
@@ -129,6 +142,7 @@ export default function App() {
                 placeholder="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                required={true}
               ></Input>
             ): (
               null
@@ -138,12 +152,14 @@ export default function App() {
               placeholder="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required={true}
             ></Input>
             <Input
               type="password"
               placeholder="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required={true}
             ></Input>
 
             {openSignIn ? (
@@ -151,6 +167,7 @@ export default function App() {
             ): (
               <Button type="submit" onClick={signUp}>Sign Up</Button>
             )}
+            <Button type="submit" onClick={handleGuest} >Use guest account</Button>
           </form>
         </div>
       </Modal>
