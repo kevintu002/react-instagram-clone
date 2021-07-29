@@ -64,7 +64,8 @@ export default function Post({ postId, user, username, caption, imageUrl }) {
         ))}
       </div>
 
-      <form className="post__commentBox">
+      {user ? (
+        <form className="post__commentBox">
         <input
           className="post__input"
           type="text"
@@ -81,6 +82,10 @@ export default function Post({ postId, user, username, caption, imageUrl }) {
           Post
         </button>
       </form>
+      ): (
+        null
+      )}
+      
     </div>
   )
 }

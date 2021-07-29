@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// export const App = () => {}
 export default function App() {
   const classes = useStyles()
   const [modalStyle] = useState(getModalStyle)
@@ -74,9 +73,10 @@ export default function App() {
 
     auth.createUserWithEmailAndPassword(email, password)
     .then(authUser => {
-      console.log(authUser)
+      // console.log(authUser.user)
       handleClose()
-      return authUser.user.updateProfile({
+      // setUser(authUser.user)
+      authUser.user.updateProfile({
         displayName: username
       })
     })
@@ -86,15 +86,8 @@ export default function App() {
   const signIn = (useGuestAccount = false) => (e) => {
     e.preventDefault()
 
-    if (!useGuestAccount) {
-      auth.signInWithEmailAndPassword(email, password)
-      .then(authUser => {
-        handleClose()
-      })
-      .catch(error => {
-        alert("No matching email and password found")
-      })
-    } else {
+    if (useGuestAccount) {
+      // sign in with guest account
       auth.signInWithEmailAndPassword('guest@account.com', 'guestaccount')
       .then(authUser => {
         handleClose()
@@ -103,6 +96,14 @@ export default function App() {
         })
       })
       .catch(error => console.log(error.message))
+    } else {
+      auth.signInWithEmailAndPassword(email, password)
+      .then(authUser => {
+        handleClose()
+      })
+      .catch(error => {
+        alert("No matching email and password found")
+      })
     }
   }
 
