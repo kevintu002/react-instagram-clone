@@ -6,6 +6,11 @@
   margin: 10px auto;
 }
 
+.imageUpload__caption {
+  padding: 10px;
+  border: 1px solid lightgray;
+}
+
 .imageUpload__progress {
   width: 100%;
 }

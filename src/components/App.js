@@ -72,13 +72,11 @@ export default function App() {
 
     auth.createUserWithEmailAndPassword(email, password)
     .then(authUser => {
-      // console.log(authUser.user)
-      handleClose()
-      // setUser(authUser.user)
-      authUser.user.updateProfile({
+      return authUser.user.updateProfile({
         displayName: username
       })
     })
+    .then(() => handleClose())
     .catch(error => alert(error.message))
   }
 
@@ -89,17 +87,15 @@ export default function App() {
       // sign in with guest account
       auth.signInWithEmailAndPassword('guest@account.com', 'guestaccount')
       .then(authUser => {
-        handleClose()
         authUser.user.updateProfile({
           displayName: 'Guest'
         })
       })
+      .then(() => handleClose())
       .catch(error => console.log(error.message))
     } else {
       auth.signInWithEmailAndPassword(email, password)
-      .then(authUser => {
-        handleClose()
-      })
+      .then(() => handleClose())
       .catch(error => {
         console.log(error.message)
         alert("No matching email and password found")
