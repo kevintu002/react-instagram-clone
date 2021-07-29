@@ -43,6 +43,7 @@ export default function Post({ postId, user, username, caption, imageUrl }) {
           src=""
           alt="Cool"
         >
+          {username[0]}
         </Avatar>
         <h3>{username}</h3>
       </div>
