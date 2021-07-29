@@ -156,13 +156,13 @@ export default function App() {
 
             {openSignIn ? (
               <Button 
-                disabled={!email && !password}
+                disabled={!email || !password}
                 type="submit" 
-                onClick={signIn}
+                onClick={signIn()}
               >Sign In</Button>
             ): (
               <Button 
-                disabled={!username && !email && !password}
+                disabled={!username || !email || !password}
                 type="submit" 
                 onClick={signUp}
               >Sign Up</Button>
