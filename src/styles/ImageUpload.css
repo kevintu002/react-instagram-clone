@@ -3,10 +3,11 @@
   flex-direction: column;
   width: 60%;
   max-width: 500px;
-  margin: 10px auto;
+  margin: 10px auto 0px auto;
 }
 
 .imageUpload__caption {
+  margin: 10px 0px;
   padding: 10px;
   border: 1px solid lightgray;
 }

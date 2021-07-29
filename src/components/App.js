@@ -191,6 +191,12 @@ export default function App() {
         )}
       </div>
 
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ): (
+        null
+      )}
+
       {/* list of posts in the db */}
       <div className="app__posts">
         {posts.map(({id, post}) => (
@@ -205,11 +211,6 @@ export default function App() {
         ))}
       </div>
 
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ): (
-        null
-      )}
     </div>
   );
 }
