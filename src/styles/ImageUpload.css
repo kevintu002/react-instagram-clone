@@ -9,10 +9,6 @@
 }
 
 .imageUpload__caption {
-  /* border-top: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
-  border-left: 0px;
-  border-right: 0px; */
   margin: 10px 0px;
   padding: 10px;
   border: 1px solid lightgray;
