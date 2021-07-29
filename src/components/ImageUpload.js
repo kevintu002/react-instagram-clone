@@ -68,7 +68,7 @@ export default function ImageUpload({username}) {
       <Button 
         disabled={!image}  
         onClick={handleUpload}
-      >Upload</Button>
+      >Post</Button>
     </div>
   )
 }
