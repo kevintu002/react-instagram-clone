@@ -34,7 +34,7 @@ export default function App() {
   const [modalStyle] = useState(getModalStyle)
 
   const [posts, setPosts] = useState([])
-  const [open, setOpen] = useState(false)
+  const [openSignUp, setOpenSignUp] = useState(false)
   const [openSignIn, setOpenSignIn] = useState(false)
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -87,7 +87,7 @@ export default function App() {
     .catch(error => alert(error.message))
 
     resetLoginFields()
-    setOpen(false)
+    handleClose()
   }
 
   // should update user somewhere
@@ -98,6 +98,11 @@ export default function App() {
     .catch(error => alert(error.messsage))
 
     resetLoginFields()
+    handleClose()
+  }
+
+  const handleClose = () => {
+    setOpenSignUp(false)
     setOpenSignIn(false)
   }
 
@@ -105,8 +110,8 @@ export default function App() {
     <div className="app">
 
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openSignUp || openSignIn}
+        onClose={handleClose}
       >
         <div style={modalStyle} className={classes.paper}>
           <form className="app__signUp">
@@ -118,12 +123,16 @@ export default function App() {
               ></img>
             </center>
 
-            <Input
-              type="text"
-              placeholder="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            ></Input>
+            {openSignUp ? (
+              <Input
+                type="text"
+                placeholder="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              ></Input>
+            ): (
+              null
+            )}
             <Input
               type="text"
               placeholder="email"
@@ -137,39 +146,11 @@ export default function App() {
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
 
-            <Button type="submit" onClick={signUp}>Sign Up</Button>
-          </form>
-        </div>
-      </Modal>
-
-      <Modal
-        open={openSignIn}
-        onClose={() => setOpenSignIn(false)}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app__signUp">
-            <center>
-              <img
-                className="app__headerImage"
-                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                alt=""
-              ></img>
-            </center>
-
-            <Input
-              type="text"
-              placeholder="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Input>
-            <Input
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Input>
-
-            <Button type="submit" onClick={signIn}>Sign In</Button>
+            {openSignIn ? (
+              <Button type="submit" onClick={signIn}>Sign In</Button>
+            ): (
+              <Button type="submit" onClick={signUp}>Sign Up</Button>
+            )}
           </form>
         </div>
       </Modal>
@@ -189,7 +170,7 @@ export default function App() {
         ): (
           <div className="app__loginContainer">
             <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+            <Button onClick={() => setOpenSignUp(true)}>Sign Up</Button>
           </div>
         )}
       </div>
