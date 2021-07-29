@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { auth, db } from '../service/firebase';
-import { Button, Input, Modal, makeStyles } from '@material-ui/core';
+import { Button, Input, Modal, makeStyles, InputLabel } from '@material-ui/core';
 
 import '../styles/App.css';
 import Post from './Post'
@@ -48,7 +48,6 @@ export default function App() {
         // console.log(authUser)
         setUser(authUser)
       } else {
-        // user is logged out
         setUser(null)
       }
     })
@@ -91,7 +90,7 @@ export default function App() {
       auth.signInWithEmailAndPassword('guest@account.com', 'guestaccount')
       .then(authUser => {
         handleClose()
-        return authUser.user.updateProfile({
+        authUser.user.updateProfile({
           displayName: 'Guest'
         })
       })
@@ -102,6 +101,7 @@ export default function App() {
         handleClose()
       })
       .catch(error => {
+        console.log(error.message)
         alert("No matching email and password found")
       })
     }
@@ -181,8 +181,10 @@ export default function App() {
         />
 
         {user ? (
-          <div>
-            {user.displayName}
+          <div className="app__user">
+            <InputLabel className="app__userDisplayName">
+              {user.displayName ? user.displayName : null}
+            </InputLabel>
             <Button onClick={() => auth.signOut()}>Logout</Button>
           </div>
         ): (

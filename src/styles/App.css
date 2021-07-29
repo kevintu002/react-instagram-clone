@@ -18,6 +18,19 @@
   justify-content: space-between;
 }
 
+.app__user {
+  display: flex;
+  align-items: center;
+}
+
+.app__userDisplayName {
+  margin-right: 10px;
+}
+
+.app__loginContainer {
+  display: flex;
+}
+
 .app__posts {
   display: flex;
   flex-direction: column;
