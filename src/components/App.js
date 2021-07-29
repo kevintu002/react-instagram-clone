@@ -69,17 +69,12 @@ export default function App() {
     })
   }, [])
 
-  const resetLoginFields = () => {
-    setUsername('')
-    setEmail('')
-    setPassword('')
-  }
-
   const signUp = (e) => {
     e.preventDefault()
 
     auth.createUserWithEmailAndPassword(email, password)
     .then(authUser => {
+      console.log(authUser)
       handleClose()
       return authUser.user.updateProfile({
         displayName: username
@@ -88,35 +83,35 @@ export default function App() {
     .catch(error => alert(error.message))
   }
 
-  const signIn = (e) => {
+  const signIn = (useGuestAccount = false) => (e) => {
     e.preventDefault()
 
-    auth.signInWithEmailAndPassword(email, password)
-    .then(authUser => {
-      handleClose()
-    })
-    .catch(error => {
-      alert("No matching email and password found")
-    })
+    if (!useGuestAccount) {
+      auth.signInWithEmailAndPassword(email, password)
+      .then(authUser => {
+        handleClose()
+      })
+      .catch(error => {
+        alert("No matching email and password found")
+      })
+    } else {
+      auth.signInWithEmailAndPassword('guest@account.com', 'guestaccount')
+      .then(authUser => {
+        handleClose()
+        return authUser.user.updateProfile({
+          displayName: 'Guest'
+        })
+      })
+      .catch(error => console.log(error.message))
+    }
   }
 
   const handleClose = () => {
-    resetLoginFields()
+    setUsername('')
+    setEmail('')
+    setPassword('')
     setOpenSignUp(false)
     setOpenSignIn(false)
-  }
-
-  const handleGuest = (e) => {
-    e.preventDefault()
-
-    auth.signInWithEmailAndPassword('guest@account.com', 'guestaccount')
-    .then(authUser => {
-      handleClose()
-      return authUser.user.updateProfile({
-        displayName: 'Guest'
-      })
-    })
-    .catch(error => alert(error.message))
   }
 
   return (
@@ -142,7 +137,6 @@ export default function App() {
                 placeholder="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                required={true}
               ></Input>
             ): (
               null
@@ -152,22 +146,28 @@ export default function App() {
               placeholder="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required={true}
             ></Input>
             <Input
               type="password"
               placeholder="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required={true}
             ></Input>
 
             {openSignIn ? (
-              <Button type="submit" onClick={signIn}>Sign In</Button>
+              <Button 
+                disabled={!email && !password}
+                type="submit" 
+                onClick={signIn}
+              >Sign In</Button>
             ): (
-              <Button type="submit" onClick={signUp}>Sign Up</Button>
+              <Button 
+                disabled={!username && !email && !password}
+                type="submit" 
+                onClick={signUp}
+              >Sign Up</Button>
             )}
-            <Button type="submit" onClick={handleGuest} >Use guest account</Button>
+            <Button type="submit" onClick={signIn(true)} >Use guest account</Button>
           </form>
         </div>
       </Modal>
