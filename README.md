@@ -20,7 +20,7 @@ You can create an account, which will automatically sign you in, and start makin
 
 Don't want to make an account? Feel free to use the guest account found in the sign in/up button.
 
-## Languages/Libraries used
+## Tech stack
 
 - React
 - Firebase
